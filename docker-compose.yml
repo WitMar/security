@@ -1,0 +1,19 @@
+services:
+  security-lab:
+    build: .
+    container_name: security-lab
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      SECURITY_LAB_DB_PATH: /data/security_lab.db
+      SECURITY_LAB_JWT_SECRET: ${SECURITY_LAB_JWT_SECRET:-change-me-in-production}
+      SECURITY_LAB_PASSWORD_PEPPER: ${SECURITY_LAB_PASSWORD_PEPPER:-change-me-too}
+      SECURITY_LAB_JWT_ISSUER: ${SECURITY_LAB_JWT_ISSUER:-https://identity.example.local}
+      SECURITY_LAB_JWT_AUDIENCE: ${SECURITY_LAB_JWT_AUDIENCE:-security-lab-api}
+    volumes:
+      - security-lab-data:/data
+
+volumes:
+  security-lab-data:
+
